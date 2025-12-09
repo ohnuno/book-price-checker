@@ -29,18 +29,77 @@ function refreshDashboard() {
       return;
     }
     
-    // B25セル（最終更新）に現在時刻を直接書き込む
+    logInfo('ダッシュボードの強制更新を開始');
+    
+    // カスタム関数を含むセルのリスト
+    const formulaCells = [
+      'B6', 'B7', 'D7',           // 現在の状況
+      'B8', 'B9', 'B10', 'B11',   // 価格統計
+      'B14', 'B15', 'B16', 'B17', // 買取実績
+      'B20', 'B21', 'B22'         // 今月の実績
+    ];
+    
+    // 価格上昇TOP5 (F7:I11)
+    for (let i = 7; i <= 11; i++) {
+      formulaCells.push(`F${i}`, `G${i}`, `H${i}`, `I${i}`);
+    }
+    
+    // 価格下落TOP5 (F15:I19)
+    for (let i = 15; i <= 19; i++) {
+      formulaCells.push(`F${i}`, `G${i}`, `H${i}`, `I${i}`);
+    }
+    
+    // 0円書籍 (F22, G22)
+    formulaCells.push('F22', 'G22');
+    
+    // 高利益TOP10 (F32:I41)
+    for (let i = 32; i <= 41; i++) {
+      formulaCells.push(`F${i}`, `G${i}`, `H${i}`, `I${i}`);
+    }
+    
+    // Step 1: 各セルの数式を一時的に保存
+    const formulas = {};
+    formulaCells.forEach(cell => {
+      const range = dashboardSheet.getRange(cell);
+      const formula = range.getFormula();
+      if (formula) {
+        formulas[cell] = formula;
+      }
+    });
+    
+    logInfo(`${Object.keys(formulas).length}個の数式を保存しました`);
+    
+    // Step 2: 数式をクリア
+    formulaCells.forEach(cell => {
+      dashboardSheet.getRange(cell).clear();
+    });
+    
+    // 強制的にスプレッドシートをフラッシュ（変更を確定）
+    SpreadsheetApp.flush();
+    
+    // Step 3: 数式を再設定
+    Object.keys(formulas).forEach(cell => {
+      dashboardSheet.getRange(cell).setFormula(formulas[cell]);
+    });
+    
+    // 再度フラッシュ
+    SpreadsheetApp.flush();
+    
+    logInfo('すべての数式を再設定しました');
+    
+    // Step 4: 最終更新時刻を更新（日本時間）
     const now = new Date();
-    dashboardSheet.getRange('B25').setValue(now);
+    const jstTime = Utilities.formatDate(now, 'Asia/Tokyo', 'yyyy/MM/dd HH:mm:ss');
+    dashboardSheet.getRange('B25').setValue(jstTime);
     
     // 完了通知
     SpreadsheetApp.getActiveSpreadsheet().toast(
-      'ダッシュボードを更新しました',
+      'ダッシュボードを更新しました（全カスタム関数を再計算）',
       '✅ 更新完了',
       3
     );
     
-    logInfo('ダッシュボードを手動更新しました');
+    logInfo('ダッシュボードの強制更新が完了しました');
     
   } catch (error) {
     logError(`refreshDashboard エラー: ${error.message}`);
