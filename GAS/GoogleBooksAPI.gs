@@ -137,7 +137,6 @@ function processAllISBNs() {
         sheet.getRange(row, CONFIG.ISBN_LIST_COLUMNS.TITLE).setValue(bookInfo.title);
         sheet.getRange(row, CONFIG.ISBN_LIST_COLUMNS.AUTHOR).setValue(bookInfo.author);
         sheet.getRange(row, CONFIG.ISBN_LIST_COLUMNS.PUBLISHER).setValue(bookInfo.publisher);
-        sheet.getRange(row, CONFIG.ISBN_LIST_COLUMNS.STATUS).setValue(CONFIG.STATUS.NOT_SOLD);
         
         // チェックボックスを設定
         ensureCheckbox(sheet, row);
@@ -229,7 +228,6 @@ function processSelectedISBNs() {
         sheet.getRange(row, CONFIG.ISBN_LIST_COLUMNS.TITLE).setValue(bookInfo.title);
         sheet.getRange(row, CONFIG.ISBN_LIST_COLUMNS.AUTHOR).setValue(bookInfo.author);
         sheet.getRange(row, CONFIG.ISBN_LIST_COLUMNS.PUBLISHER).setValue(bookInfo.publisher);
-        sheet.getRange(row, CONFIG.ISBN_LIST_COLUMNS.STATUS).setValue(CONFIG.STATUS.NOT_SOLD);
         
         // チェックボックスを設定
         ensureCheckbox(sheet, row);
@@ -354,7 +352,6 @@ function onEdit(e) {
       sheet.getRange(row, CONFIG.ISBN_LIST_COLUMNS.TITLE).setValue(bookInfo.title);
       sheet.getRange(row, CONFIG.ISBN_LIST_COLUMNS.AUTHOR).setValue(bookInfo.author);
       sheet.getRange(row, CONFIG.ISBN_LIST_COLUMNS.PUBLISHER).setValue(bookInfo.publisher);
-      sheet.getRange(row, CONFIG.ISBN_LIST_COLUMNS.STATUS).setValue(CONFIG.STATUS.NOT_SOLD);
       
       // チェックボックスを設定
       ensureCheckbox(sheet, row);
