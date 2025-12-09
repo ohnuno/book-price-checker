@@ -3,6 +3,9 @@
  * Main Configuration and Constants
  * 
  * ファイル名: Config.gs
+ * 
+ * 【変更履歴】
+ * - G列（ステータス）削除に伴い、列番号定義を更新
  */
 
 // ========================================
@@ -37,6 +40,7 @@ const CONFIG = {
   },
   
   // 列番号定義（ISBNリストシート）
+  // ※ G列（ステータス）削除に伴い更新
   ISBN_LIST_COLUMNS: {
     ISBN: 1,           // A列
     TITLE: 2,          // B列
@@ -44,9 +48,8 @@ const CONFIG = {
     PUBLISHER: 4,      // D列
     PRICE: 5,          // E列
     UPDATED: 6,        // F列
-    STATUS: 7,         // G列
-    PRICE_CHANGE: 8,   // H列
-    CHECKBOX: 9        // I列
+    PRICE_CHANGE: 7,   // G列（旧H列）
+    CHECKBOX: 8        // H列（旧I列）
   },
   
   // 列番号定義（買取完了シート）
@@ -79,7 +82,7 @@ const CONFIG = {
     STATUS: 5          // E列
   },
   
-  // ステータス定義
+  // ステータス定義（参考：現在は使用していない）
   STATUS: {
     NOT_SOLD: '未買取',
     SOLD: '買取済'
