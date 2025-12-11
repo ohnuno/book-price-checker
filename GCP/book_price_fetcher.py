@@ -1,3 +1,17 @@
+"""
+ValueBooks.jpから古本買取価格を取得するスクレイパー
+
+ISBNリストシート列構成:
+- A列(1): ISBN
+- B列(2): 書籍名
+- C列(3): 著者
+- D列(4): 初回見積価格
+- E列(5): 最新見積価格
+- F列(6): 価格更新日時
+- G列(7): 価格増減
+- H列(8): チェックボックス
+"""
+
 import time
 import logging
 from datetime import datetime
@@ -586,7 +600,7 @@ class ValueBooksScraper:
                         # Calculate price change
                         if previous_price is not None:
                             change = new_price - previous_price
-                            sheet.update_cell(i, 8, change)  # Column H (価格増減)
+                            sheet.update_cell(i, 7, change)  # Column G (価格増減)
                             logger.info(f"  → Updated: {previous_price}円 → {new_price}円 (change: {change:+d}円)")
                         else:
                             logger.info(f"  → New entry: {new_price}円")
